@@ -1,14 +1,10 @@
-const bodyParser = require('body-parser');
 const express = require('express');
+const routes = require('./routes');
 
 const app = express();
-app.use(bodyParser.json());
-
 const porta = 3000;
 
-app.get("/teste", (req, res) => {
-    res.status(200).send({mensagem: "Boas vindas a API"})
-});
+routes(app);
 
 app.listen(porta, () => console.log(`Servidor está rodando na porta ${porta}`));
 
