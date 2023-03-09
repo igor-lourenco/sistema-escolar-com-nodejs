@@ -21,31 +21,48 @@ class PessoaController {
       });
 
       if (p !== null) {
-          return res.status(200).json(p);
-        } else {
-          return res.status(404).json({mensagem : `Id ${id} não encontrado!`});
+        return res.status(200).json(p);
+      } else {
+        return res.status(404).json({ mensagem: `Id ${id} não encontrado!` });
       }
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
   }
 
-  static async insert(req,res){
+  static async insert(req, res) {
     const novaPessoa = req.body;
 
     try {
       const novaPessoaCriada = await database.pessoas.create(novaPessoa);
       return res.status(201).json(novaPessoaCriada);
-      
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
-
   }
 
+  static async update(req, res) {
+    const novasInfos = req.body;
+    const { id } = req.params;
+
+    try {
+      await database.pessoas.update(novasInfos, {
+        where: {
+          id: Number(id)
+        }
+      });
+
+      const pessoaAtualizada = await database.pessoas.findOne({
+        where: {
+          id: Number(id)
+        }
+      });
+
+      return res.status(200).json(pessoaAtualizada);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
 }
-
-
-
 
 module.exports = PessoaController;
