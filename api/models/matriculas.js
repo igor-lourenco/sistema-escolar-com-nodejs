@@ -2,6 +2,9 @@
 /*
   Comando pra criar a tabela Matriculas:
   npx sequelize-cli model:create --name Matriculas --attributes status:string
+
+  Comando pra fazer a associação entre as tabelas:
+  npx sequelize-cli db:migrate
 */
 
 module.exports = (sequelize, DataTypes) => {
@@ -9,8 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING
   }, {});
   Matriculas.associate = function(models) {
-    Matriculas.belongsTo(models.pessoas);
-    Matriculas.belongsTo(models.Turmas);
+    Matriculas.belongsTo(models.pessoas, {
+      foreignKey: 'estudante_id'
+    });
+    Matriculas.belongsTo(models.Turmas, {
+      foreignKey: 'turma_id'
+    });
   };
   return Matriculas;
 };

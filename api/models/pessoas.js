@@ -1,4 +1,9 @@
 'use strict';
+
+/*
+  Comando pra fazer a associação entre as tabelas:
+  npx sequelize-cli db:migrate
+*/
 module.exports = (sequelize, DataTypes) => {
   const pessoas = sequelize.define('pessoas', {
     nome: DataTypes.STRING,

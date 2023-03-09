@@ -2,6 +2,9 @@
 /*
   Comando pra criar a tabela com os campos:
   npx sequelize-cli model:create --name Niveis --attributes descr_nivel:string
+
+  Comando pra fazer a associação entre as tabelas:
+  npx sequelize-cli db:migrate
 */
 
 module.exports = (sequelize, DataTypes) => {
