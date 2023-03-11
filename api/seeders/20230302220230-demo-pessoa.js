@@ -39,4 +39,4 @@ module.exports = {
   },
 };
 
-//comando pra popular esses dados no banco: npx seqielize-cli db:seed:all
+//comando pra popular esses dados no banco: npx sequelize-cli db:seed:all
