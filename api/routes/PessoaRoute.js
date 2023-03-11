@@ -9,4 +9,7 @@ router.post('/pessoas', PessoaController.insert);
 router.put('/pessoas/:id', PessoaController.update);
 router.delete('/pessoas/:id', PessoaController.deleteById);
 
+router.get('/pessoas/:estudanteId/matriculas', PessoaController.findAllMatriculasByPessoa);
+router.get('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.findByIdMatriculas);
+
 module.exports  = router;

@@ -81,6 +81,43 @@ class PessoaController {
       return res.status(500).json(erro.message);
     }
   }
+
+  static async findAllMatriculasByPessoa(req, res) {
+    const {estudanteId} = req.params;
+    try {
+      const todasAsPessoas = await database.Matriculas.findAll({
+        where: {
+          //id: Number(matriculaId),
+          estudante_id: Number(estudanteId)
+        }
+      });
+      return res.status(200).json(todasAsPessoas);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
+
+
+  static async findByIdMatriculas(req, res) {
+    const {estudanteId, matriculaId} = req.params;
+
+    try {
+      const matricula = await database.Matriculas.findOne({
+        where: {
+          id: Number(matriculaId),
+          estudante_id: Number(estudanteId)
+        }
+      });
+
+      if (matricula !== null) {
+        return res.status(200).json(matricula);
+      } else {
+        return res.status(404).json({ mensagem: `Id ${matriculaId} não encontrado!` });
+      }
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
 }
 
 module.exports = PessoaController;
