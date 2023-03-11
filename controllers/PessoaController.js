@@ -87,7 +87,6 @@ class PessoaController {
     try {
       const todasAsPessoas = await database.Matriculas.findAll({
         where: {
-          //id: Number(matriculaId),
           estudante_id: Number(estudanteId)
         }
       });
@@ -120,9 +119,7 @@ class PessoaController {
   }
 
   static async insertMatricula(req, res) {
-
     const { estudanteId } = req.params;
-
     const novaMatricula = { ...req.body, estudante_id: Number(estudanteId)};
 
     try {
@@ -152,6 +149,25 @@ class PessoaController {
       });
 
       return res.status(200).json(matriculaAtualizada);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
+
+  static async deleteByIdMatricula(req, res){
+    const {estudanteId, matriculaId} = req.params;
+
+    try {
+      
+      await database.Matriculas.destroy({
+        where: {
+          id: Number(matriculaId),
+          estudante_id: Number(estudanteId)
+        }
+      });
+
+      return res.status(200).json({ mensagem : `Id ${matriculaId} foi deletado com sucesso!`});
+
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
