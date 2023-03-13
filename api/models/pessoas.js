@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     ativo: DataTypes.BOOLEAN,
     email: DataTypes.STRING,
     role: DataTypes.STRING
-  }, {});
+  }, {paranoid: true});
   pessoas.associate = function(models) {
     pessoas.hasMany(models.Turmas, {
       foreignKey: 'docente_id'

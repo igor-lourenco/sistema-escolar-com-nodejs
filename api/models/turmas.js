@@ -11,7 +11,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Turmas = sequelize.define('Turmas', {
     data_inicio: DataTypes.DATEONLY
-  }, {});
+  }, {paranoid: true});
   Turmas.associate = function(models) {
     Turmas.hasMany(models.Matriculas, {
       foreignKey: 'turma_id'
