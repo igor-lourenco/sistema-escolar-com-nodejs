@@ -12,7 +12,7 @@ module.exports = {
 };
 
 /*
-  Comando pra adicionar a coluna na tabela:
+  Comando pra adicionar a coluna na tabela: 
   npx sequelize-cli db:migrate
 
 */

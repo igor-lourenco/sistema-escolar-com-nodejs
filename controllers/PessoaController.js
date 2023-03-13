@@ -82,6 +82,25 @@ class PessoaController {
     }
   }
 
+  static async restorePessoa(req, res){
+    const { id } = req.params;
+
+    try {
+      
+      await database.pessoas.restore({
+        where: {
+          id: Number(id)
+        }
+      });
+
+      return res.status(200).json({ mensagem : `Id ${id} foi restaurado com sucesso!`});
+
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
+
+
   static async findAllMatriculasByPessoa(req, res) {
     const {estudanteId} = req.params;
     try {
