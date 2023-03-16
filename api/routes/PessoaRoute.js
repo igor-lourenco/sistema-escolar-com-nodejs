@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/pessoas', PessoaController.findAllActive);
 router.get('/pessoas/todos', PessoaController.findAll);
+router.get('/pessoas/:estudanteId/busca-matriculas', PessoaController.findPessoaComMatricula);
 router.get('/pessoas/:id', PessoaController.findById);
 router.post('/pessoas', PessoaController.insert);
 router.put('/pessoas/:id', PessoaController.update);

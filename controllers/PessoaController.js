@@ -12,7 +12,7 @@ class PessoaController {
 
   static async findAll(req, res) {
     try {
-      const todasAsPessoas = await database.pessoas.scope('todos').findAll();
+      const todasAsPessoas = await database.pessoas.scope("todos").findAll();
       return res.status(200).json(todasAsPessoas);
     } catch (erro) {
       return res.status(500).json(erro.message);
@@ -23,7 +23,7 @@ class PessoaController {
     const { id } = req.params;
 
     try {
-      const p = await database.pessoas.scope('todos').findOne({
+      const p = await database.pessoas.scope("todos").findOne({
         where: {
           id: Number(id),
         },
@@ -46,7 +46,7 @@ class PessoaController {
       const novaPessoaCriada = await database.pessoas.create(novaPessoa);
       return res.status(201).json(novaPessoaCriada);
     } catch (erro) {
-      return res.status(500).json({message: erro.message});
+      return res.status(500).json({ message: erro.message });
     }
   }
 
@@ -57,14 +57,14 @@ class PessoaController {
     try {
       await database.pessoas.update(novasInfos, {
         where: {
-          id: Number(id)
-        }
+          id: Number(id),
+        },
       });
 
       const pessoaAtualizada = await database.pessoas.findOne({
         where: {
-          id: Number(id)
-        }
+          id: Number(id),
+        },
       });
 
       return res.status(200).json(pessoaAtualizada);
@@ -73,50 +73,49 @@ class PessoaController {
     }
   }
 
-  static async deleteById(req, res){
+  static async deleteById(req, res) {
     const { id } = req.params;
 
     try {
-      
       await database.pessoas.destroy({
         where: {
-          id: Number(id)
-        }
+          id: Number(id),
+        },
       });
 
-      return res.status(200).json({ mensagem : `Id ${id} foi deletado com sucesso!`});
-
+      return res
+        .status(200)
+        .json({ mensagem: `Id ${id} foi deletado com sucesso!` });
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
   }
 
-  static async restorePessoa(req, res){
+  static async restorePessoa(req, res) {
     const { id } = req.params;
 
     try {
-      
       await database.pessoas.restore({
         where: {
-          id: Number(id)
-        }
+          id: Number(id),
+        },
       });
 
-      return res.status(200).json({ mensagem : `Id ${id} foi restaurado com sucesso!`});
-
+      return res
+        .status(200)
+        .json({ mensagem: `Id ${id} foi restaurado com sucesso!` });
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
   }
 
-
   static async findAllMatriculasByPessoa(req, res) {
-    const {estudanteId} = req.params;
+    const { estudanteId } = req.params;
     try {
       const todasAsPessoas = await database.Matriculas.findAll({
         where: {
-          estudante_id: Number(estudanteId)
-        }
+          estudante_id: Number(estudanteId),
+        },
       });
       return res.status(200).json(todasAsPessoas);
     } catch (erro) {
@@ -124,22 +123,23 @@ class PessoaController {
     }
   }
 
-
   static async findByIdMatriculas(req, res) {
-    const {estudanteId, matriculaId} = req.params;
+    const { estudanteId, matriculaId } = req.params;
 
     try {
       const matricula = await database.Matriculas.findOne({
         where: {
           id: Number(matriculaId),
-          estudante_id: Number(estudanteId)
-        }
+          estudante_id: Number(estudanteId),
+        },
       });
 
       if (matricula !== null) {
         return res.status(200).json(matricula);
       } else {
-        return res.status(404).json({ mensagem: `Id ${matriculaId} não encontrado!` });
+        return res
+          .status(404)
+          .json({ mensagem: `Id ${matriculaId} não encontrado!` });
       }
     } catch (erro) {
       return res.status(500).json(erro.message);
@@ -148,10 +148,12 @@ class PessoaController {
 
   static async insertMatricula(req, res) {
     const { estudanteId } = req.params;
-    const novaMatricula = { ...req.body, estudante_id: Number(estudanteId)};
+    const novaMatricula = { ...req.body, estudante_id: Number(estudanteId) };
 
     try {
-      const novaMatriculaCriada = await database.Matriculas.create(novaMatricula);
+      const novaMatriculaCriada = await database.Matriculas.create(
+        novaMatricula
+      );
       return res.status(201).json(novaMatriculaCriada);
     } catch (erro) {
       return res.status(500).json(erro.message);
@@ -159,21 +161,21 @@ class PessoaController {
   }
 
   static async updateMatricula(req, res) {
-    const {estudanteId, matriculaId} = req.params;
+    const { estudanteId, matriculaId } = req.params;
     const novasInfos = req.body;
 
     try {
       await database.Matriculas.update(novasInfos, {
         where: {
           id: Number(matriculaId),
-          estudante_id: Number(estudanteId)
-        }
+          estudante_id: Number(estudanteId),
+        },
       });
 
       const matriculaAtualizada = await database.Matriculas.findOne({
         where: {
           id: Number(matriculaId),
-         }
+        },
       });
 
       return res.status(200).json(matriculaAtualizada);
@@ -182,20 +184,49 @@ class PessoaController {
     }
   }
 
-  static async deleteByIdMatricula(req, res){
-    const {estudanteId, matriculaId} = req.params;
+  static async deleteByIdMatricula(req, res) {
+    const { estudanteId, matriculaId } = req.params;
 
     try {
-      
       await database.Matriculas.destroy({
         where: {
           id: Number(matriculaId),
-          estudante_id: Number(estudanteId)
-        }
+          estudante_id: Number(estudanteId),
+        },
       });
 
-      return res.status(200).json({ mensagem : `Id ${matriculaId} foi deletado com sucesso!`});
+      return res
+        .status(200)
+        .json({ mensagem: `Id ${matriculaId} foi deletado com sucesso!` });
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
 
+  static async findPessoaComMatricula(req, res) {
+    const { estudanteId } = req.params;
+
+    try {
+      const pessoa = await database.pessoas.findOne({
+        where: {
+          id: Number(estudanteId),
+        },
+      });
+
+      const matriculas = await pessoa.getAulasMatriculadas(); // metodo criado no scope do modelo pessoas
+
+      const pessoaComMatriculas = {
+        id: pessoa.id,
+        nome: pessoa.nome,
+        ativo: pessoa.ativo,
+        email: pessoa.email,
+        role: pessoa.role,
+        createdAt: pessoa.createdAt,
+        updatedAt: pessoa.updatedAt,
+        matriculas: matriculas,
+      };
+
+      return res.status(200).json(pessoaComMatriculas);
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
