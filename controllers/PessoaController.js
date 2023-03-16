@@ -46,7 +46,7 @@ class PessoaController {
       const novaPessoaCriada = await database.pessoas.create(novaPessoa);
       return res.status(201).json(novaPessoaCriada);
     } catch (erro) {
-      return res.status(500).json(erro.message);
+      return res.status(500).json({message: erro.message});
     }
   }
 
