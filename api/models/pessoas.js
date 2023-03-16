@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
           ativo: true,
         },
       },
+      scopes: {
+        todos: {
+          where: {},
+        },
+      },
     }
   );
   pessoas.associate = function (models) {

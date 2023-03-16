@@ -1,9 +1,18 @@
 const database = require("../api/models");
 
 class PessoaController {
+  static async findAllActive(req, res) {
+    try {
+      const todasAsPessoasAtivas = await database.pessoas.findAll();
+      return res.status(200).json(todasAsPessoasAtivas);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
+
   static async findAll(req, res) {
     try {
-      const todasAsPessoas = await database.pessoas.findAll();
+      const todasAsPessoas = await database.pessoas.scope('todos').findAll();
       return res.status(200).json(todasAsPessoas);
     } catch (erro) {
       return res.status(500).json(erro.message);
@@ -14,7 +23,7 @@ class PessoaController {
     const { id } = req.params;
 
     try {
-      const p = await database.pessoas.findOne({
+      const p = await database.pessoas.scope('todos').findOne({
         where: {
           id: Number(id),
         },
