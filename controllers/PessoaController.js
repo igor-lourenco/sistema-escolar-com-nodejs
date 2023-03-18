@@ -233,43 +233,66 @@ class PessoaController {
     }
   }
 
-  static async findMatriculaByTurma(req, res){
+  static async findMatriculaByTurma(req, res) {
     const { turmaId } = req.params;
 
     try {
       const todasAsMatriculas = await database.Matriculas.findAndCountAll({
         where: {
           turma_id: Number(turmaId),
-          status: "Confirmado"
-
+          status: "Confirmado",
         },
-        limit:20,
-        order:[['estudante_id', 'DESC']]
-
+        limit: 20,
+        order: [["estudante_id", "DESC"]],
       });
 
-      return res.status(200).json(todasAsMatriculas)
-
+      return res.status(200).json(todasAsMatriculas);
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
   }
 
-  static async findMatriculaByTurmaLotadas(req, res){
+  static async findMatriculaByTurmaLotadas(req, res) {
     const lotacaoTurma = 2;
-    
+
     try {
       const turmasLotadas = await database.Matriculas.findAndCountAll({
         where: {
-          status: "Confirmado"
+          status: "Confirmado",
         },
-        attributes:["turma_id"],
+        attributes: ["turma_id"],
         group: ["turma_id"],
-        having: Sequelize.literal(`count(turma_id) >= ${lotacaoTurma}`)
+        having: Sequelize.literal(`count(turma_id) >= ${lotacaoTurma}`),
       });
 
-      return res.status(200).json(turmasLotadas)
+      return res.status(200).json(turmasLotadas);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  }
 
+  static async cancelPessoa(req, res) {
+    const { estudanteId } = req.params;
+
+    try {
+      await database.pessoas.update(
+        { ativo: false },
+        {
+          where: {
+            id: Number(estudanteId),
+          },
+        }
+      );
+
+      await database.Matriculas.update({ status: "Cancelado" },
+        {
+          where: {
+            estudante_id: Number(estudanteId),
+          },
+        });
+
+        
+      return res.status(200).json({message: `Matriculas referente ao estudante ${estudanteId} canceladas!`});
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
