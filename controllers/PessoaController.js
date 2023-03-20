@@ -1,5 +1,8 @@
-const database = require("../api/models");
-const Sequelize = require("sequelize");
+//const database = require("../api/models");
+//const Sequelize = require("sequelize");
+const Services = require("../api/services/Services.js");
+const pessoaService = new Services('pessoas');
+
 
 class PessoaController {
   static async findAllActive(req, res) {
@@ -13,7 +16,8 @@ class PessoaController {
 
   static async findAll(req, res) {
     try {
-      const todasAsPessoas = await database.pessoas.scope("todos").findAll();
+      //const todasAsPessoas = await database.pessoas.scope("todos").findAll();
+      const todasAsPessoas = await pessoaService.findAll();
       return res.status(200).json(todasAsPessoas);
     } catch (erro) {
       return res.status(500).json(erro.message);
