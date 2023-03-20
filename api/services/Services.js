@@ -6,7 +6,23 @@ class Services {
     }
 
     async findAll(){
-        return database[this.nomeDoModelo].scope("todos").findAll();
+        return database[this.nomeDoModelo].findAll();
+    }
+
+    async findById(id){
+
+    }
+
+    async insert(dados){
+
+    }
+
+    async update(id, dados){
+
+    }
+
+    async deleteById(id){
+
     }
 }
 

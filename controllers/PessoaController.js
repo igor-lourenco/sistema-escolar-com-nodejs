@@ -1,8 +1,7 @@
 //const database = require("../api/models");
 //const Sequelize = require("sequelize");
-const Services = require("../api/services/Services.js");
-const pessoaService = new Services('pessoas');
-
+const {PessoaService} = require("../api/services");
+const pessoaService = new PessoaService();
 
 class PessoaController {
   static async findAllActive(req, res) {
