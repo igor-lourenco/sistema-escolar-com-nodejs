@@ -6,7 +6,7 @@ const pessoaService = new PessoaService();
 class PessoaController {
   static async findAllActive(req, res) {
     try {
-      const todasAsPessoasAtivas = await database.pessoas.findAll();
+      const todasAsPessoasAtivas = await pessoaService.findAllActive();
       return res.status(200).json(todasAsPessoasAtivas);
     } catch (erro) {
       return res.status(500).json(erro.message);
@@ -16,7 +16,7 @@ class PessoaController {
   static async findAll(req, res) {
     try {
       //const todasAsPessoas = await database.pessoas.scope("todos").findAll();
-      const todasAsPessoas = await pessoaService.findAll();
+      const todasAsPessoas = await pessoaService.findAllPessoas();
       return res.status(200).json(todasAsPessoas);
     } catch (erro) {
       return res.status(500).json(erro.message);
