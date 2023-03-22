@@ -17,8 +17,12 @@ class Services {
 
     }
 
-    async update(id, dados){
+    async update(id, dados, transacao = {}){
+        return database[this.nomeDoModelo].update(dados, { where: { id: id }}, transacao);
+    }
 
+    async updates(where, dados, transacao = {}){
+        return database[this.nomeDoModelo].update(dados, { where: { ...where }}, transacao);
     }
 
     async deleteById(id){
